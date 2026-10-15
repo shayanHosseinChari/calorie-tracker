@@ -15,7 +15,7 @@ function App() {
       <AppContent />
     </SafeAreaProvider>
   );
-}
+} 
 
 function AppContent() {
   const safeAreaInsets = useSafeAreaInsets();
