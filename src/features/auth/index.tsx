@@ -5,5 +5,5 @@ const FAuthIndex = ()=>{
     return (
         <View></View>
     )
-}
+} 
 export default FAuthIndex
