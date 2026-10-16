@@ -3,7 +3,9 @@ import {View} from 'react-native'
 
 const FAuthIndex = ()=>{
     return (
-        <View></View>
+        <View>
+            
+        </View>
     )
 } 
 export default FAuthIndex
