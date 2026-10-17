@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Voltra widget picker strings (auto-generated). default (values/) -->
+    <string name="voltra_widget_step_widget_label">قدم شمار من</string>
+    <string name="voltra_widget_step_widget_description">نمایش تعداد قدم‌های امروز</string>
+</resources>

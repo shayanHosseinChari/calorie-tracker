@@ -8,4 +8,13 @@ const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
  */
 const config = {};
 
+if (process.platform === 'win32') {
+  config.watcher = {
+    ...config.watcher,
+    watchman: {
+      enabled: false,
+    },
+  };
+}
+
 module.exports = mergeConfig(getDefaultConfig(__dirname), config);
