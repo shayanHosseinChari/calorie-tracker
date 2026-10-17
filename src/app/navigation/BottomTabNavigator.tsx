@@ -7,6 +7,7 @@ import { useTheme } from '@shared/hooks/useTheme';
 import { HomeScreen } from '@/features/home/screens/HomeScreen';
 import { TabParamList } from './types';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
+import { StepCounter } from '@/features/step-counter';
 
 const Tab = createBottomTabNavigator<any>();
 
@@ -29,14 +30,7 @@ const TABS = [
     ),
     component: () => null,
   },
-  {
-    name: 'Reports' as const,
-    label: 'گزارش‌ها',
-    icon: ({ color, size }: IconProps) => (
-      <MaterialDesignIcons name="chart-bar" color={color} size={size} />
-    ),
-    component: () => null,
-  },
+ 
   {
     name: 'Profile' as const,
     label: 'پروفایل',
@@ -44,6 +38,14 @@ const TABS = [
       <MaterialDesignIcons name="account" color={color} size={size} />
     ),
     component: () => null,
+  },
+  {
+    name: 'StepCounter' as const,
+    label: 'قدم شمار',
+    icon: ({ color, size }: IconProps) => (
+      <MaterialDesignIcons name="food-steak" color={color} size={size} />
+    ),
+    component: StepCounter,
   },
 ];
 
@@ -65,7 +67,7 @@ export function BottomTabNavigator() {
           borderTopWidth: 0,
           marginHorizontal: 16,
           height: 58,
-          marginBottom: 16,
+          marginBottom: 6,
           paddingVertical: 5,
           borderRadius: t.radius.xl,
           position: 'absolute',
