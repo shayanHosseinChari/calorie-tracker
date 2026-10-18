@@ -50,6 +50,8 @@ export const updateStepNotification = async (steps: number, goal: number) => {
         autoCancel: false,
         colorized:true,
         onlyAlertOnce: true,
+        asForegroundService:true,
+        
         color: '#4F46E5',
         smallIcon:"ic_notification", 
         progress: {

@@ -12,7 +12,7 @@ if (process.platform === 'win32') {
   config.watcher = {
     ...config.watcher,
     watchman: {
-      enabled: false,
+      enabled: true,
     },
   };
 }
