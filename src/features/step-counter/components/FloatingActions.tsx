@@ -193,7 +193,8 @@ export const FloatingActions: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10
+    marginTop: 10,
+    paddingHorizontal: 13
 },
   button: {
     width: '100%',

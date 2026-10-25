@@ -57,7 +57,7 @@ export function HomeTopBar({
           dotColor={t.colors.orange}
           valueColor={t.colors.orange}
           compact={compact}
-          accessibilityLabel={`کالری مصرف‌شده: ${consumedLabel} کیلوکالری`}
+          accessibilityLabel={`کالری مصرف‌شده: ${consumedLabel} کالری`}
           theme={t}
         />
 
@@ -75,7 +75,7 @@ export function HomeTopBar({
           dotColor={t.colors.greenTextDark}
           valueColor={t.colors.greenTextDark}
           compact={compact}
-          accessibilityLabel={`هدف روزانه: ${goalLabel} کیلوکالری`}
+          accessibilityLabel={`هدف روزانه: ${goalLabel} کالری`}
           theme={t}
         />
       </View>

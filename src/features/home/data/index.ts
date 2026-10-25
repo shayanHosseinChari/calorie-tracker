@@ -14,7 +14,7 @@ export const CALORIE_SUMMARY = {
   consumedLabel: '۱٬۸۵۰',
   targetLabel: '۲٬۲۰۰',
   remainingLabel: '۳۵۰',
-  unit: 'کیلوکالری',
+  unit: 'کالری',
 };
 
 export const MACROS = [

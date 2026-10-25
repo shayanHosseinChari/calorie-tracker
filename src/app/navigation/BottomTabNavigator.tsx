@@ -8,6 +8,7 @@ import { HomeScreen } from '@/features/home/screens/HomeScreen';
 import { TabParamList } from './types';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import { StepCounter } from '@/features/step-counter';
+import ProfilePage from '@/features/profile/screen/ProfilePage';
 
 const Tab = createBottomTabNavigator<any>();
 
@@ -22,22 +23,14 @@ const TABS = [
     ),
     component: HomeScreen,
   },
-  {
-    name: 'Diary' as const,
-    label: 'دفترچه',
-    icon: ({ color, size }: IconProps) => (
-      <MaterialDesignIcons name="notebook" color={color} size={size} />
-    ),
-    component: () => null,
-  },
  
-  {
+  { 
     name: 'Profile' as const,
     label: 'پروفایل',
     icon: ({ color, size }: IconProps) => (
       <MaterialDesignIcons name="account" color={color} size={size} />
     ),
-    component: () => null,
+    component: () => <ProfilePage />,
   },
   {
     name: 'StepCounter' as const,

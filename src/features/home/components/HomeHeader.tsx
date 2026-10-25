@@ -1,11 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '../../../shared/hooks/useTheme';
+import { useProfile } from '@/features/profile/hooks/useProfile';
+import { useProfileContext } from '@/features/profile/context/ProfileContext';
 
 type Props = { compact: boolean };
 
 export function HomeHeader({ compact }: Props) {
   const t = useTheme();
+  const {profile} = useProfileContext()
   return (
     <View style={styles.header}>
       <View style={styles.userSection}>
@@ -13,8 +16,8 @@ export function HomeHeader({ compact }: Props) {
           <Text style={styles.avatarEmoji}>👨🏻</Text>
         </View>
         <View style={{ flexShrink: 1 }}>
-          <Text style={[styles.greeting, { fontSize: compact ? 18 : 21, color: t.colors.text, fontFamily: t.typography.family }]}>
-            سلام، روز بخیر
+          <Text numberOfLines={1}  style={[styles.greeting, { fontSize: compact ? 18 : 21, color: t.colors.text, fontFamily: t.typography.family }]}>
+   {profile?.name} سلام، روز بخیر
           </Text>
           <Text style={[styles.subtitle, { color: t.colors.muted, fontFamily: t.typography.family }]}>
             امروز هم مراقب خودت باش

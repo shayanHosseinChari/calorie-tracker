@@ -7,6 +7,9 @@ import { navigationTheme } from '@shared/theme/navigationTheme';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { BottomTabNavigator } from './BottomTabNavigator';
 import { AuthNavigator } from './AuthNavigator';
+import { ProfileProvider } from '@/features/profile/context/ProfileContext';
+import EditProfile from '@/features/profile/screen/EditProfilePage';
+import UpdateMealsScreen from '@/features/meals/screens/UpdateMealsScreen';
 
 const Stack = createNativeStackNavigator<any>();
 
@@ -23,13 +26,20 @@ export function RootNavigator() {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {true ? (
-          <Stack.Screen name="Tabs" component={BottomTabNavigator} />
-        ) : (
+      {isAuthenticated ? (
+        <ProfileProvider>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Tabs" component={BottomTabNavigator} />
+            <Stack.Screen name="EditProfilePage" component={EditProfile} />
+            <Stack.Screen name="UpdateMeals" component={UpdateMealsScreen} />
+
+          </Stack.Navigator>
+        </ProfileProvider>
+      ) : (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Auth" component={AuthNavigator} />
-        )}
-      </Stack.Navigator>
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   );
 }
