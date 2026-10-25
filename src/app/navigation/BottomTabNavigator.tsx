@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTheme } from '@shared/hooks/useTheme';
 
@@ -23,16 +24,7 @@ const TABS = [
     ),
     component: HomeScreen,
   },
- 
-  { 
-    name: 'Profile' as const,
-    label: 'پروفایل',
-    icon: ({ color, size }: IconProps) => (
-      <MaterialDesignIcons name="account" color={color} size={size} />
-    ),
-    component: () => <ProfilePage />,
-  },
-  {
+    {
     name: 'StepCounter' as const,
     label: 'قدم شمار',
     icon: ({ color, size }: IconProps) => (
@@ -40,40 +32,52 @@ const TABS = [
     ),
     component: StepCounter,
   },
+  {
+    name: 'Profile' as const,
+    label: 'پروفایل',
+    icon: ({ color, size }: IconProps) => (
+      <MaterialDesignIcons name="account" color={color} size={size} />
+    ),
+    component: () => <ProfilePage />,
+  },
+
 ];
 
 export function BottomTabNavigator() {
   const t = useTheme();
+  const insets = useSafeAreaInsets();
 
   return (
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: t.colors.neutralIconActive,
-        tabBarInactiveTintColor: t.colors.neutralIcon,
-        tabBarActiveBackgroundColor: t.colors.peachActive,
+
+        // 👇 رنگ فعال و غیرفعال
+        tabBarActiveTintColor: t.colors.addIcon,   // رنگ آیکون و لیبل در حالت فعال
+        tabBarInactiveTintColor: t.colors.muted,   // رنگ آیکون و لیبل در حالت غیرفعال
+
+        // 👇 پس‌زمینه فعال حذف شد
+        // tabBarActiveBackgroundColor: t.colors.peachActive,
 
         animation: 'shift',
         tabBarStyle: {
           backgroundColor: t.colors.white,
           borderTopWidth: 0,
-          marginHorizontal: 16,
-          height: 58,
-          marginBottom: 6,
-          paddingVertical: 5,
-          borderRadius: t.radius.xl,
-          position: 'absolute',
-          ...t.shadows.nav,
+          height: 58 + insets.bottom,
+          paddingBottom: insets.bottom,
+          paddingTop: 5,
+          borderRadius: 0,
         },
         tabBarLabelStyle: {
           fontFamily: t.typography.family,
           fontSize: 10,
         },
-        tabBarItemStyle:{
-          overflow:"hidden",
-          borderRadius:t.radius.xl,marginVertical: 3,marginHorizontal: 2
-        }
+        tabBarItemStyle: {
+          borderRadius: 30,
+          marginVertical: 3,
+          marginHorizontal: 2,
+        },
       }}
     >
       {TABS.map(tab => (
@@ -84,13 +88,10 @@ export function BottomTabNavigator() {
           options={{
             tabBarLabel: tab.label,
             tabBarAccessibilityLabel: tab.label,
-            tabBarIcon: ({ color, focused, size }) => (
-              <tab.icon
-                color={focused ? t.colors.addIcon : t.colors.muted}
-                size={size}
-              />
+            // 👇 color از پارامتر گرفته می‌شود (React Navigation خودش رنگ فعال/غیرفعال را اعمال می‌کند)
+            tabBarIcon: ({ color, size }) => (
+              <tab.icon color={color} size={size} />
             ),
-           
           }}
         />
       ))}
