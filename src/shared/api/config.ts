@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'http://10.196.117.180:8000';  
+export const API_BASE_URL = 'https://calorie-counter-backend2.vercel.app';  
