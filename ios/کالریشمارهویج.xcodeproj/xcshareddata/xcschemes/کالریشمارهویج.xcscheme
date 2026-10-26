@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "CalorieTracker.app"
-               BlueprintName = "CalorieTracker"
-               ReferencedContainer = "container:CalorieTracker.xcodeproj">
+               BuildableName = "کالریشمارهویج.app"
+               BlueprintName = "کالریشمارهویج"
+               ReferencedContainer = "container:کالریشمارهویج.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "CalorieTrackerTests.xctest"
-               BlueprintName = "CalorieTrackerTests"
-               ReferencedContainer = "container:CalorieTracker.xcodeproj">
+               BuildableName = "کالریشمارهویجTests.xctest"
+               BlueprintName = "کالریشمارهویجTests"
+               ReferencedContainer = "container:کالریشمارهویج.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "CalorieTracker.app"
-            BlueprintName = "CalorieTracker"
-            ReferencedContainer = "container:CalorieTracker.xcodeproj">
+            BuildableName = "کالریشمارهویج.app"
+            BlueprintName = "کالریشمارهویج"
+            ReferencedContainer = "container:کالریشمارهویج.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "CalorieTracker.app"
-            BlueprintName = "CalorieTracker"
-            ReferencedContainer = "container:CalorieTracker.xcodeproj">
+            BuildableName = "کالریشمارهویج.app"
+            BlueprintName = "کالریشمارهویج"
+            ReferencedContainer = "container:کالریشمارهویج.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
