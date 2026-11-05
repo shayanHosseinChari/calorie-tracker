@@ -1,4 +1,7 @@
 {
   "name": "کالری شمار هویج",
-  "displayName": "کالری شمار هویج"
+  "displayName": "کالری شمار هویج",
+ "react-native-tapsell-mediation": {
+        "TapsellMediationAppKey": "tcrjgnmcqccedgagmtlmfmmrrfqrrfkfmrondktmlontgpheartnctaomshmnktmjodesl"
+    }
 }

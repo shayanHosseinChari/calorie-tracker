@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'https://calorie-counter-backend2.vercel.app';  
+export const API_BASE_URL = 'https://food.netapi.ir';  

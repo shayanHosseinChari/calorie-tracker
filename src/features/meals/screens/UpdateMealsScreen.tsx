@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
+  BackHandler,
   FlatList,
   KeyboardAvoidingView,
   Platform,
@@ -22,6 +23,9 @@ import { normalizeDigits } from '@/features/auth/utils/normalizeDigits';
 import type { Food } from '@/features/foods/types';
 import { useAddMeal } from '../hooks/useAddMeals';
 import { useMeals } from '../hooks/useMeals';
+import { useInterstitialAd } from '@/features/ad/hook/useInterstitialAd';
+import { useRewardedAd } from '@/features/ad/hook/useRewardedAd';
+import { INTERSTITIAL_ZONE_ID, REWARDED_ZONE_ID } from '@/shared/constants';
 
 type Colors = ReturnType<typeof useTheme>['colors'];
 type AddMealRoute = RouteProp<any, 'AddMeal'>;
@@ -42,7 +46,7 @@ export default function UpdateMealsScreen() {
   const toast = useToast();
 
   const { meal } = route.params as any;
-  const mealType: number =  meal?.id;
+  const mealType: number = meal?.id;
   const mealDate: string | undefined = meal?.date;
 
   const [query, setQuery] = useState('');
@@ -58,7 +62,60 @@ export default function UpdateMealsScreen() {
   const [customUnit, setCustomUnit] = useState('');
   const [customAmount, setCustomAmount] = useState('1');
 
+  // 🔒 state واحد برای «تبلیغ در حال نمایش» — وقتی true باشه همه راه‌های خروج بلاک میشن
+  const [isAdShowing, setIsAdShowing] = useState(false);
+
+  const hasShownInterstitialRef = useRef(false);
+
   const { data: mealsData, isLoading: mealsLoading } = useMeals(mealDate);
+
+  // ✅ Interstitial
+  const {
+    loadAd: loadInterstitial,
+    showAd: showInterstitial,
+    isReady: isInterstitialReady,
+  } = useInterstitialAd(INTERSTITIAL_ZONE_ID, () => {
+    setIsAdShowing(false);
+  });
+
+  // ✅ Rewarded — بعد از بسته شدن تبلیغ خودکار برمی‌گردیم
+  const {
+    loadAd: loadRewarded,
+    showAd: showRewarded,
+    isReady: isRewardedReady,
+  } = useRewardedAd(REWARDED_ZONE_ID, () => {
+    console.log('Reward granted');
+    setIsAdShowing(false);
+    navigation.goBack();
+  });
+
+  // 📥 لود اولیه تبلیغات
+  useEffect(() => {
+    loadInterstitial();
+    loadRewarded();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // 🎬 نمایش خودکار Interstitial (فقط یک بار)
+  useEffect(() => {
+    if (isInterstitialReady && !hasShownInterstitialRef.current) {
+      hasShownInterstitialRef.current = true;
+      setIsAdShowing(true);
+      showInterstitial();
+    }
+  }, [isInterstitialReady, showInterstitial]);
+  const onHeaderBack = useCallback(() => {
+    if (isAdShowing) return;
+    navigation.goBack();
+  }, [isAdShowing, navigation]);
+
+  useEffect(() => {
+    if (!isAdShowing) return;
+    navigation.setOptions({ gestureEnabled: false });
+    return () => {
+      navigation.setOptions({ gestureEnabled: true });
+    };
+  }, [isAdShowing, navigation]);
 
   const currentMeal = useMemo(() => {
     if (!mealsData?.meals) return null;
@@ -211,7 +268,14 @@ export default function UpdateMealsScreen() {
         foods,
       });
       toast.show('وعده با موفقیت ثبت شد.', { type: 'success' });
-      navigation.goBack();
+
+      // ✅ قبل از نمایش Rewarded، state رو ست کن تا بک بلاک بشه
+      if (isRewardedReady) {
+        setIsAdShowing(true);
+        showRewarded();
+      } else {
+        navigation.goBack();
+      }
     } catch (e: any) {
       toast.show(e?.message ?? 'ثبت وعده انجام نشد.', { type: 'error' });
     }
@@ -234,7 +298,7 @@ export default function UpdateMealsScreen() {
         <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
           <View style={styles.headerRow}>
             <Pressable
-              onPress={() => navigation.goBack()}
+              onPress={onHeaderBack}
               style={styles.headerIcon}
               hitSlop={10}
             >
@@ -265,7 +329,7 @@ export default function UpdateMealsScreen() {
                   onChangeText={(v) => setQuery(v)}
                   placeholder="جستجوی غذا..."
                   placeholderTextColor={colors.muted}
-                  editable={!isSubmitting}
+                  editable={!isSubmitting && !isAdShowing}
                   returnKeyType="search"
                   onSubmitEditing={() => setShowResults(query.trim().length > 0)}
                 />
@@ -473,10 +537,11 @@ export default function UpdateMealsScreen() {
 
               <Pressable
                 onPress={onSubmit}
-                disabled={isSubmitting || selectedItems.length === 0}
+                disabled={isSubmitting || selectedItems.length === 0 || isAdShowing}
                 style={({ pressed }) => [
                   styles.submitBtn,
-                  (isSubmitting || selectedItems.length === 0) && { opacity: 0.5 },
+                  (isSubmitting || selectedItems.length === 0 || isAdShowing) &&
+                    { opacity: 0.5 },
                   pressed && { opacity: 0.85 },
                 ]}
               >

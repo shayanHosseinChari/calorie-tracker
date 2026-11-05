@@ -1,5 +1,4 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -7,8 +6,10 @@ import { ThemeProvider } from './providers/ThemeProvider';
 import { RootNavigator } from './navigation/RootNavigator';
 import { AuthProvider } from '@/features/auth/context/AuthContext';
 import { ToastProvider } from '@/shared/ui/toast/ToastContext';
+import { setUserConsent } from '@react-native-tapsell-mediation/tapsell';
 
-// ⚠️ نمونه ساخته می‌شود، نه کلاس
+setUserConsent(true);
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -24,11 +25,11 @@ export default function App() {
     <SafeAreaProvider>
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
-        <ToastProvider>
+          <ToastProvider>
             <AuthProvider>
-            <RootNavigator />
-          </AuthProvider>
-        </ToastProvider>
+              <RootNavigator />
+            </AuthProvider>
+          </ToastProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </SafeAreaProvider>
